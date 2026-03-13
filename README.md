@@ -1,6 +1,6 @@
-📸 #PhotoShootStudio
+# 📸 PhotoShootStudio
 
-1. Initial Setup
+## 1. Initial Setup
 
 # Clone the project
 
@@ -9,7 +9,7 @@ git clone https://github.com/Verma1235/photoshootstudio.git
 cd PhotoShootStudio
 ```
 
-2. \*\*Run Backend (run one-by-one)
+## 2.Run Backend (run one-by-one)
 
 ```bash
 cd backend
@@ -17,7 +17,7 @@ npm install
 npm start
 ```
 
-3. \*\*Run Frontend
+## 3.Run Frontend
    Open a new terminal in VS Code:
 
 ```bash
@@ -26,8 +26,8 @@ npm install
 npm run dev
 ```
 
-🛠 \*\*Working with Branches (Contribution)
-If you want to add something new (like a gallery or login):
+## 🛠 Working with Branches (Contribution)
+If you want to add something new (like new ideas or improve or optimistation):
 
 Create a branch:
 
@@ -45,12 +45,10 @@ Upload to GitHub:
 ```bash
  git push -u origin branch-name
  ```
- 👥 ##Contributors
+ 👥 Contributors
 
 **This project is maintained and developed by:
 
-<a href="https://www.google.com/search?q=https://github.com/Verma1235/photoshootstudio/graphs/contributors">
-<img src="https://www.google.com/search?q=https://contrib.rocks/image%3Frepo%3DVerma1235/photoshootstudio" alt="Contributors" />
-</a>
 
-Made with contrib.rocks.
+
+
