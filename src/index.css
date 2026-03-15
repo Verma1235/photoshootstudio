@@ -1,0 +1,28 @@
+/* @import "tailwindcss";
+ */
+/* 1. Global Scrollbar Styling (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 1px;               /* Width of vertical scrollbar */
+  height: 1px;              /* Height of horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f10b;       /* Color of the progress bar track */
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;          /* Color of the draggable handle */
+  border-radius: 5px;
+  /* border: 1px solid #f1f1f132; Creates padding effect around thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #55555528;          /* Color when hovering */
+}
+
+/* 2. Firefox Support (Standard CSS Properties) */
+* {
+  scrollbar-width: thin;          /* "auto" or "thin" */
+  scrollbar-color:#e1683c1c #f1f1f137;  /* thumb color | track color */
+}
