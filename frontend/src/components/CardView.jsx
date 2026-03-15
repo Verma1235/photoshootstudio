@@ -4,7 +4,7 @@ const CardView = () => {
 
   return (
     <>
-      <div className="w-[270px] h-[160px] sm:w-[200px] sm:h-[120px] bg-linear-to-r from-[#bcf27e51] to-[#85e8b27f]  rounded-2xl flex overflow-hidden px-2 shadow-lg border border-amber-300 transition-transform duration-300 hover:scale-108 hover:z-50 hover:bg-amber-200 lg:scale-90 xl:scale-100">
+      <div className="w-[270px] h-[160px] sm:w-[200px] sm:h-[120px] bg-gradient-to-r from-[#bcf27e51] to-[#85e8b27f]  rounded-2xl flex overflow-hidden px-2 shadow-lg border border-amber-300 transition-transform duration-300 hover:scale-108 hover:z-50 hover:bg-amber-200 lg:scale-90 xl:scale-100">
         {/* Left Side: Icon and Stats */}
         <div className="w-3/5 h-full p-3 flex flex-col justify-between">
           <div className="w-10 h-10 bg-[#a6eefda6] rounded-lg flex items-center justify-center">

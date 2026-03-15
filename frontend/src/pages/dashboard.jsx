@@ -18,7 +18,7 @@ const UserDashboard = () => {
 
   return (
     <>
-      <div className="relative h-screen  bg-linear-to-r from-[#ff9169bf] to-[#e04ef3bb] p-2 flex justify-center items-center overflow-hidden">
+      <div className="relative h-screen  bg-gradient-to-r from-[#ff9169bf] to-[#e04ef3bb] p-2 flex justify-center items-center overflow-hidden">
         <div className="h-[99%] w-[99%] bg-[#ffffff5f] rounded-xl shadow-lg  shadow-red-400/50 overflow-hidden flex xl:gap-3 ">
           <SideMenu
             iconstoggle={iconstoggle}
