@@ -1,38 +1,40 @@
-const CardView = () => {
-  const percentage = 50;
-  const color = "#00d5ff";
+import { Icons } from "./svg/Icons";
+
+const CardView = ({ DATA ,handlePopUpToggle}) => {
+  const percentage =
+    Number(DATA.data.percentage).toFixed(1) >= 100
+      ? 100
+      : Number(DATA.data.percentage).toFixed(1);
+  const color = DATA?.iconClr || "#00d5ff";
 
   return (
     <>
-      <div className="w-[270px] h-[160px] sm:w-[200px] sm:h-[120px] bg-gradient-to-r from-[#bcf27e51] to-[#85e8b27f]  rounded-2xl flex overflow-hidden px-2 shadow-lg border border-amber-300 transition-transform duration-300 hover:scale-108 hover:z-50 hover:bg-amber-200 lg:scale-90 xl:scale-100">
+      <div
+        className={`w-[270px] h-[160px] sm:w-[200px] sm:h-[120px] bg-gradient-to-r from-[#bcf27e51] to-[#85e8b27f]  rounded-2xl flex overflow-hidden px-2 shadow-lg border border-[${DATA.iconClr}]/60 transition-transform duration-300 hover:scale-108 hover:z-50 hover:bg-amber-200 lg:scale-90 xl:scale-100`}
+      >
         {/* Left Side: Icon and Stats */}
         <div className="w-3/5 h-full p-3 flex flex-col justify-between">
-          <div className="w-10 h-10 bg-[#a6eefda6] rounded-lg flex items-center justify-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke={color}
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
-            </svg>
+          <div
+            className={`w-10 h-10 bg-[${DATA?.iconBg||"#00d5ff"}] rounded-lg flex items-center justify-center`}
+          >
+            <Icons icon={DATA?.icon} color={DATA?.iconClr||"#00d5ff"} />
           </div>
           <div>
-             <h2 className="font-bold text-2xl text-slate-900 leading-none">2341+</h2>
-             <div className="text-sm text-amber-900 font-mono mt-1">Bookings</div>
+            <h2 className="font-bold text-2xl text-slate-900 leading-none">
+              {DATA.data.total >= 1000 ? DATA.data.total : DATA.data.total}
+            </h2>
+            <div className="text-sm text-amber-900 font-mono mt-1">
+              {DATA.name}
+            </div>
           </div>
         </div>
 
         {/* Right Side: Options and Progress */}
         <div className="w-2/5 h-full flex flex-col">
           {/* Dots Icon Container */}
-          <div className="w-full h-1/3 flex justify-end items-center pr-1">
+          <div className="w-full h-[30%] flex justify-end items-center pr-1 ">
             <svg
+            onClick={handlePopUpToggle}
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"
@@ -51,24 +53,32 @@ const CardView = () => {
           </div>
 
           {/* Progress Ring Container */}
-          <div className="w-full h-2/3 flex items-center justify-center relative pb-2">
-            
+          <div className="w-full h-[50%] flex items-center justify-center relative  ">
             {/* Percentage Text: Centered perfectly regardless of size */}
             <span className="absolute z-10 text-[12px] font-bold text-slate-800">
-                {percentage}%
+              {percentage}%
             </span>
 
             {/* The Animated Ring */}
-            <div 
+            <div
               className="w-[60px] h-[60px] rounded-full"
               style={{
                 background: `conic-gradient(${color} ${percentage}%, #e2e8f0 0)`,
-                WebkitMask: 'radial-gradient(farthest-side, transparent 75%, white 0)',
-                mask: 'radial-gradient(farthest-side, transparent 75%, white 0)',
+                WebkitMask:
+                  "radial-gradient(farthest-side, transparent 75%, white 0)",
+                mask: "radial-gradient(farthest-side, transparent 75%, white 0)",
                 filter: `drop-shadow(0 0 5px ${color}80)`,
-                transition: `all 0.5s ease-in-out`
+                transition: `all 0.5s ease-in-out`,
               }}
             />
+          </div>
+          <div className="w-full h-[20%] text-center ">
+            <div className="flex items-center justify-center  gap-y-0 h-full w-full">
+              <div className={`font-bold text-[10px] p-2 text-[${DATA.iconClr}] leading-none`}>
+               {DATA.data.active}/{DATA.data.total >= 1000 ? DATA.data.total : DATA.data.total}
+              </div>
+              <div className={`text-[10px] text-[${DATA.iconBg}] font-mono mt-1`}>Active</div>
+            </div>
           </div>
         </div>
       </div>

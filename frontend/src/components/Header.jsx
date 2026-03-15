@@ -2,10 +2,10 @@ const Header = ({ mypic, handleMenuToggle }) => {
   return (
     <>
       <div className="w-100% h-[40px]  mx-2 my-1 rounded flex items-center justify-between px-1 backdrop-blur">
-        <h2 className="font-mono text-xl hidden sm:block">Dashboard</h2>
+        <h2 className="font-mono text-xl hidden xl:block">Dashboard</h2>
         {/* side menu start */}
         <div
-          className="sm:hidden flex items-center justify-center w-[40px] h-full"
+          className="xl:hidden flex items-center justify-center w-[40px] h-full"
           onClick={handleMenuToggle}
         >
           <svg
