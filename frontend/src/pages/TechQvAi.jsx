@@ -6,8 +6,9 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import "../../node_modules/highlight.js/styles/github.css"; // optional syntax highlighting
-
-const socket = io(import.meta.env.BACKEND_URL ||"http://localhost:5000"); // adjust port if needed
+import dotenv from "dotenv";
+dotenv.config();
+const socket = io(process.env.BACKEND_URL || "http://localhost:5000"); // adjust port if needed
 
 const TechQvAi = () => {
   const [aitoggle, setaitoggle] = useState(false);
@@ -73,7 +74,9 @@ const TechQvAi = () => {
           onClick={handelAiToggleBtn}
         >
           <Icons icon="AI" color="blue" />
-          <span className="text-blue-950 font-bold font-sans">AI Assistance</span>
+          <span className="text-blue-950 font-bold font-sans">
+            AI Assistance
+          </span>
         </div>
       )}
 
@@ -156,7 +159,15 @@ const TechQvAi = () => {
                     {/* ✅ AI Markdown Rendering */}
                     {msg.sender === "AI" ? (
                       <div className="markdown-wrapper">
-                        {msg.text.includes("```") || msg.text.includes("|" || msg.text.includes("**") || msg.text.includes("[") ||  (msg.text.includes("(") &&  msg.text.includes(")")) ||  msg.text.includes("]")) ? (
+                        {msg.text.includes("```") ||
+                        msg.text.includes(
+                          "|" ||
+                            msg.text.includes("**") ||
+                            msg.text.includes("[") ||
+                            (msg.text.includes("(") &&
+                              msg.text.includes(")")) ||
+                            msg.text.includes("]"),
+                        ) ? (
                           <ReactMarkdown
                             remarkPlugins={[remarkGfm]}
                             rehypePlugins={[rehypeHighlight]}
