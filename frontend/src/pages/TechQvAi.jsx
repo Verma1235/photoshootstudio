@@ -9,9 +9,9 @@ import "../../node_modules/highlight.js/styles/github.css"; // optional syntax h
 // import dotenv from "dotenv";
 // dotenv.config();
 
-const backend_origin= `${import.meta.env.VITE_BACKEND_URL}` || 'http://localhost:5000';
+// const backend_origin= `${import.meta.env.VITE_BACKEND_URL}` || 'http://localhost:5000';
 // alert(backend_origin)
-const socket = io(backend_origin); // adjust port if needed
+const socket = io("https://photoshootstudio-backend.onrender.com"); // adjust port if needed
 
 const TechQvAi = () => {
   const [aitoggle, setaitoggle] = useState(false);
