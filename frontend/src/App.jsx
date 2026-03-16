@@ -7,8 +7,8 @@ function App() {
 
   return (
     <>
-      <UserDashboard/>
-      <TechQvAi/>
+      <UserDashboard />
+      <TechQvAi />
     </>
   );
 }

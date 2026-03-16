@@ -31,9 +31,11 @@ app.use("/", router);
 
 /* ================= HTTP + SOCKET.IO ================= */
 const httpServer = createServer(app);
+const fronted_origin= `${process.env.FRONTED_URL}` || 'http://localhost:5173';
+console.log(fronted_origin)
 const io = new Server(httpServer, {
     cors: {
-        origin: process.env.FRONTED_URL || "http://localhost:5173",
+        origin:fronted_origin,
         methods: ["GET", "POST"],
     },
 });
