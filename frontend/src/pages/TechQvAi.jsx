@@ -6,8 +6,9 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import "../../node_modules/highlight.js/styles/github.css"; // optional syntax highlighting
-
-const socket = io("http://localhost:5000"); // adjust port if needed
+import dotenv from "dotenv";
+dotenv.config();
+const socket = io(process.env.BACKEND_URL ||"http://localhost:5000"); // adjust port if needed
 
 const TechQvAi = () => {
   const [aitoggle, setaitoggle] = useState(false);
