@@ -1,12 +1,8 @@
-// src/pages/TechQvAi.jsx
 import { Icons } from "../components/svg/Icons";
 import { useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeHighlight from "rehype-highlight";
-import "../../node_modules/highlight.js/styles/github.css"; // optional syntax highlighting
 
+// Connect to your backend Socket.IO
 const socket = io("http://localhost:5000"); // adjust port if needed
 
 const TechQvAi = () => {
@@ -17,8 +13,11 @@ const TechQvAi = () => {
   const chatRef = useRef(null);
 
   const handelAiToggleBtn = () => setaitoggle(!aitoggle);
-  const handelModel = async () => setLlmModel((prev) => !prev);
-
+  const handelModel =async () => {
+    setLlmModel(prev => !prev);
+    // alert("model change trigger");
+  };
+  // Emit model change whenever llmModel changes
   useEffect(() => {
     socket.emit("changeModel", llmModel, (res) => {
       console.log(res);
@@ -26,29 +25,34 @@ const TechQvAi = () => {
   }, [llmModel]);
 
   useEffect(() => {
+    // Listen for messages from server
     const handleMessage = (msg) => {
       setMessages((prev) => [...prev, { sender: "AI", text: msg }]);
       scrollToBottom();
     };
 
+    // Listen for server trigger to change model
     const handleModelChange = async (data) => {
       console.log("Model change triggered by server:", data);
-      await handelModel();
+      await handelModel(); // toggles the model
     };
 
     socket.on("messageFromServer", handleMessage);
     socket.on("servertriggerToChangeModel", handleModelChange);
 
+    // Cleanup listeners when component unmounts
     return () => {
       socket.off("messageFromServer", handleMessage);
       socket.off("servertriggerToChangeModel", handleModelChange);
     };
-  }, []);
+  }, []); // empty dependency array ensures this runs only once
 
   const sendMessage = () => {
     if (!input.trim()) return;
+
+    // Add message locally
     setMessages((prev) => [...prev, { sender: "You", text: input }]);
-    socket.emit("messageFromClient", input);
+    socket.emit("messageFromClient", input ); // send to backend
     setInput("");
     scrollToBottom();
   };
@@ -86,30 +90,36 @@ const TechQvAi = () => {
                 <Icons icon="AI" color="purple" />
               </div>
               <div>
-                <h1 className="text-purple-900 font-mono font-extrabold text-[15px]">
+                <h1 className="  text-purple-900 font-mono font-extrabold text-[15px]">
                   TechQv AI
                 </h1>
-                <div className="flex items-center gap-1 text-[10px] opacity-90">
+                <div className="flex items-center gap-1 text-[10px] opacity-90  ">
                   <span className="scale-[70%]">
                     <Icons icon="AI" color="green" />
                   </span>
-                  <span className="text-blue-950 font-semibold text-[9px]">
-                    Developed by Dinesh Verma
+                  <span className="text-blue-950 font-semibold text-[9px] ">
+                    Developed by Dinesh verma
                   </span>
                 </div>
               </div>
             </div>
             <div className="flex gap-x-[10px] sm:gap-x-[20px] h-full w-fit items-center justify-between">
-              <div className="cursor-pointer" onClick={handelModel}>
+              <div className="cursor-pointer">
                 {llmModel ? (
-                  <span className="flex flex-col items-center">
+                  <span
+                    className="flex flex-col items-center"
+                    onClick={handelModel}
+                  >
                     <Icons icon="leftToggle" color="#940606" />
                     <span className="text-[#940606] font-extrabold text-[10px] select-none hidden md:block">
                       Helping model
                     </span>
                   </span>
                 ) : (
-                  <span className="flex flex-col items-center">
+                  <span
+                    className="flex flex-col items-center"
+                    onClick={handelModel}
+                  >
                     <Icons icon="rightToggle" color="#03672b" />
                     <span className="text-[#03672b] font-extrabold text-[10px] select-none hidden md:block">
                       info/chat model
@@ -150,74 +160,10 @@ const TechQvAi = () => {
                     className={`p-3 rounded-2xl shadow-sm text-sm ${
                       msg.sender === "You"
                         ? "bg-purple-300 text-gray-800 rounded-tr-2xl rounded-bl-2xl"
-                        : "bg-white/70 text-gray-700 rounded-tl-2xl rounded-br-2xl overflow-x-auto"
+                        : "bg-white/70 text-gray-700 rounded-tl-2xl rounded-br-2xl"
                     }`}
                   >
-                    {/* ✅ AI Markdown Rendering */}
-                    {msg.sender === "AI" ? (
-                      <div className="markdown-wrapper">
-                        {msg.text.includes("```") || msg.text.includes("|" || msg.text.includes("**") || msg.text.includes("[") ||  (msg.text.includes("(") &&  msg.text.includes(")")) ||  msg.text.includes("]")) ? (
-                          <ReactMarkdown
-                            remarkPlugins={[remarkGfm]}
-                            rehypePlugins={[rehypeHighlight]}
-                            skipHtml={false}
-                            components={{
-                              a: ({ node, ...props }) => (
-                                <a
-                                  {...props}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                />
-                              ),
-                              code: ({
-                                node,
-                                inline,
-                                className,
-                                children,
-                                ...props
-                              }) => {
-                                if (inline) {
-                                  return (
-                                    <code className={className} {...props}>
-                                      {children}
-                                    </code>
-                                  );
-                                }
-                                const codeText = String(children).replace(
-                                  /\n$/,
-                                  "",
-                                );
-                                const copyToClipboard = () =>
-                                  navigator.clipboard.writeText(codeText);
-
-                                return (
-                                  <div className="relative group">
-                                    <pre
-                                      className={`${className} max-w-full overflow-x-auto p-2 rounded-md bg-gray-100/50 backdrop-blur-[5px]`}
-                                      {...props}
-                                    >
-                                      <code>{children}</code>
-                                    </pre>
-                                    <button
-                                      onClick={copyToClipboard}
-                                      className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 bg-black/50 text-white/60 text-xs px-2 py-1 rounded hover:bg-purple-700/50 transition"
-                                    >
-                                      Copy
-                                    </button>
-                                  </div>
-                                );
-                              },
-                            }}
-                          >
-                            {msg.text}
-                          </ReactMarkdown>
-                        ) : (
-                          <span>{msg.text}</span>
-                        )}
-                      </div>
-                    ) : (
-                      msg.text
-                    )}
+                    {msg.text}
                   </div>
                 </div>
               </div>

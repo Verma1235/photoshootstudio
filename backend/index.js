@@ -1,42 +1,62 @@
-// imports all dependancies ---------------- start -----------------
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import connectDB from "./config/db.js"
+import { createServer } from "http";
+import { Server } from "socket.io";
+
+import connectDB from "./config/db.js";
 import router from "./routes/generalRoutes.js";
 import { authMiddleware } from "./middleware/authMiddleware.js";
 
-// imports all dependancies ---------------- end --------------------
-
 dotenv.config();
 
-
-// include middlewares ------------------------ start----------------
+// ------------------------ Express app setup ------------------------
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
 
+// Allow CORS only from your frontend
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
-// external middlewares
+// external middleware
 app.use(authMiddleware);
-// include middlewares ------------------------ end------------------
 
-
-// routers----------------------- start ------------------------------
+// routers
 app.use("/", router);
-// routers----------------------- end ------------------------------
 
+// ------------------------ Create HTTP server + Socket.IO ------------------------
+const httpServer = createServer(app);
 
-connectDB().then(() => {
-    app.listen(process.env.PORT, () => {
-        console.log(`SERVER RUN AT http://localhost:${process.env.PORT}`);
+const io = new Server(httpServer, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+  },
+});
 
-    })
-}).catch((error) => {
-    console.log(`database connection die !! i.e. server not started`);
-})
+// Socket.IO events
+io.on("connection", (socket) => {
+  console.log("A user connected:", socket.id);
 
+  socket.on("messageFromClient", (data) => {
+    console.log("Message from client:", data);
+    socket.broadcast.emit("messageFromServer", data);
+  });
 
+  socket.on("disconnect", () => {
+    console.log("User disconnected:", socket.id);
+  });
+});
 
-
+// ------------------------ Connect DB & start server ------------------------
+connectDB()
+  .then(() => {
+    httpServer.listen(process.env.PORT, () => {
+      console.log(`SERVER RUN AT http://localhost:${process.env.PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log(
+      `Database connection failed! Server not started. Error: ${error.message}`
+    );
+  });
