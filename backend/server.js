@@ -173,7 +173,7 @@ async function runllmAgent(userMessage, phoneNumber = "default") {
 export { runllmAgent };
 
 /* ================= SOCKET.IO ================= */
-let llmModelToggle = false;
+let llmModelToggle = true;
 
 io.on("connection", (socket) => {
     console.log("User connected:", socket.id);
