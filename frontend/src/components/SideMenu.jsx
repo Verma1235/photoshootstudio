@@ -3,6 +3,7 @@ const SideMenu = ({
   menuflag,
   handleMenuToggle,
   handleIconsToggle,
+  smsideBtn
 }) => {
   return (
     <>
@@ -83,6 +84,10 @@ const SideMenu = ({
             <path d="M9 3v18"></path>
             <path d="m16 15-3-3 3-3"></path>
           </svg>
+        </div>
+        <div>
+          <smsideBtn/>
+          
         </div>
       </div>
     </>

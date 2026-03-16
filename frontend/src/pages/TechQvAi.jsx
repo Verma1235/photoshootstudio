@@ -73,7 +73,7 @@ const TechQvAi = () => {
           onClick={handelAiToggleBtn}
         >
           <Icons icon="AI" color="blue" />
-          <span>AI assistance</span>
+          <span className="text-blue-950 font-bold font-sans">AI Assistance</span>
         </div>
       )}
 

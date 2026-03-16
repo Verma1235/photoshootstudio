@@ -8,6 +8,8 @@ import { cardData } from "../dataset/cardData.jsx";
 import { OverAllReportCard } from "../components/OverAllReportCard.jsx";
 import { AnalyticsCard } from "../components/AnalyticsCard.jsx";
 import { Icons } from "../components/svg/Icons.jsx";
+import {smsideBtn} from "../components/SideMenuBtn/smsideBtn.jsx";
+
 
 const UserDashboard = () => {
   const [menuflag, setMenuflag] = useState(true);
@@ -42,7 +44,9 @@ const UserDashboard = () => {
             menuflag={menuflag}
             handleMenuToggle={handleMenuToggle}
             handleIconsToggle={handleIconsToggle}
+            smsideBtn={smsideBtn}
           />
+          
 
           {/* MAIN AREA */}
           <div
